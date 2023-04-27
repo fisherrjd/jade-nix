@@ -1,5 +1,9 @@
+## Prerequistes
+
+Setup Nix via - https://nixos.org/download.html
 
 ## How to use
+
 
 Drop a file like this in your home directory (`~/cfg.nix`) and run `nix-env -i -f ~/cfg.nix` to use this file to manage your globally installed nix packages!
 
