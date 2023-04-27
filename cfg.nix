@@ -1,63 +1,62 @@
-{ jacobi ? import
+{ pkgs ? import
     (fetchTarball {
       name = "jpetrucciani-2023-04-26";
-      url = "https://github.com/jpetrucciani/nix/archive/bad05f7d6160f6ade2c51de0ae27a32e2a5df353.tar.gz";
-      sha256 = "0m589a9kba8fkz2iaq02k8baq9h6fbj1rm1haph3fwqxybjhji88";
+      url = "https://github.com/jpetrucciani/nix/archive/5f01d3c72d7d2b003debb8d333d654f5a51c2403.tar.gz";
+      sha256 = "19kr4d49z54sf8z8llbdc720im07slb3128c0dpqc172hxrnpqwj";
     })
     { }
 }:
 let
   name = "cfg";
-  tools = with jacobi; {
+  tools = with pkgs; {
     cli = [
       bashInteractive
-      gh
-      hax.comma
       cowsay
       curl
       delta
       dyff
       figlet
+      gh
       git
       gron
-      llama-cpp
-      starship
+      hax.comma
       jq
       just
-      nodePackages.prettier
+      llama-cpp
       scc
       shfmt
+      starship
       yq-go
       (writeShellScriptBin "hms" ''
         nix-env -i -f ~/cfg.nix
       '')
     ];
     nix = [
-      nixpkgs-fmt
-      nixup
-      rnix-lsp
+      direnv
+      nil
       nix_hash_jpetrucciani
       nix-direnv
-      direnv
+      nixpkgs-fmt
+      nixup
     ];
     node = [
-      nodejs-18_x
+      nodejs_20
+      nodePackages.prettier
     ];
     python = [
       (python311.withPackages (p: with p; [
         bandit
         black
-        flake8
         mypy
-        pylint
         requests
+        ruff
         types-requests
       ]))
     ];
   };
-
-  env = jacobi.enviro {
-    inherit name tools;
-  };
+  paths = pkgs.lib.flatten [ (builtins.attrValues tools) ];
 in
-env
+pkgs.buildEnv {
+  inherit name paths;
+  buildInputs = paths;
+}
