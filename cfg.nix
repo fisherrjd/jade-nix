@@ -11,7 +11,6 @@ let
   tools = with jacobi; {
     cli = [
       bashInteractive
-      direnv
       gh
       hax.comma
       cowsay
@@ -38,6 +37,8 @@ let
       nixup
       rnix-lsp
       nix_hash_jpetrucciani
+      nix-direnv
+      direnv
     ];
     node = [
       nodejs-18_x
