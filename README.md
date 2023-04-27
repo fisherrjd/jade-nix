@@ -19,3 +19,7 @@ direnv allow
 ### [cfg.nix](./cfg.nix)
 
 This file contains my custom `cfg.nix` file for configuring a global environment on a non-nixOS system.
+
+### [PyHax.nix](./PyHax.nix)
+
+This file contains my attempt at packaging python libraries for nix
